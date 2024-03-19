@@ -1,0 +1,11 @@
+/* Footer.css */
+
+.App-footer {
+    background-color: #282c34;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
