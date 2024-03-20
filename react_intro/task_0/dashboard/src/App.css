@@ -1,41 +1,36 @@
-/* App.css */
+* {
+  font-family: 'Calibri';
+}
+
+:root { /* como generando una variable*/
+  --primary-color: #e0354b;
+}
 
 .App {
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 20vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  max-height: 200px;
 }
 
-.Red-line {
-  width: 80%;
-  height: 2px;
-  background-color: red;
-  margin: 20px auto;
+.App-header {
+  display: flex;
+  align-items: center;
+}
+
+.App-header h1 {
+  color: var(--primary-color);
 }
 
 .App-body {
-  padding: 20px;
+  padding: 0 5%;
+  min-height: 60vh;
+  border: 3px solid var(--primary-color);
+  border-left: none;
+  border-right: none;
 }
 
-.App-footer {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+.App-body p {
+  text-align: left;
 }
