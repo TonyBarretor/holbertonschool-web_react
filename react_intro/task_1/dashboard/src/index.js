@@ -8,17 +8,14 @@ import Notifications from './Notifications';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <div className='root-notifications'>
+      <Notifications /> 
+    </div>
     <App />
   </React.StrictMode>
 );
 
-const rootNotifications = ReactDOM.createRoot(document.getElementById('root-notifications'));
-rootNotifications.render(
-  <React.StrictMode>
-    <Notifications />
-  </React.StrictMode>
-);
-
+// de la 9 a la 16 son renderizciones directas de Notifcations y de App
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
