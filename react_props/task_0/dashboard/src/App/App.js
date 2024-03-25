@@ -1,27 +1,22 @@
 import React from 'react';
-import logo from './holbertonLogo.jpg';
-import { getFullYear, getFooterCopy } from '../utils';
-import Notifications from './Notifications'; // Import Notifications component
-import Login from './Login/Login';
-import Footer from './Footer/Footer';
-import Header from './Header/Header';
 import './App.css';
+import Header from '../Header/Header';
+import Notifications from '../Notifications/Notifications';
+import Footer from '../Footer/Footer';
+import Login from '../Login/Login';
 
 function App() {
   return (
     <>
       <Notifications />
       <div className="App">
-        {/* Header */}
         <Header />
-        
-        {/* Body */}
         <div className="App-body">
           <Login />
         </div>
-
-        {/* Footer */}
-        <Footer />
+        <div className="App-footer">
+          <Footer />
+        </div>
       </div>
     </>
   );

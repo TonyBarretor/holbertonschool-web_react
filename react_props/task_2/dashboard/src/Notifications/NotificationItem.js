@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-function NotificationItem({ type, html, value }) {
+
+const NotificationItem = ({type, html, value}) => {
   return (
-    <li data-notification-type={type} dangerouslySetInnerHTML={html ? { __html: html } : null}>
+    <li data-notification-type={type} dangerouslySetInnerHTML={html}>
       {value}
     </li>
-  );
+  )
 }
 
 export default NotificationItem;
-

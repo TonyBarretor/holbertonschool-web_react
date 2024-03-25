@@ -1,21 +1,20 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import NotificationItem from './NotificationItem';
+import React from "react";
+import { shallow } from "enzyme";
+import NotificationItem from "./NotificationItem";
 
-describe('NotificationItem Component', () => {
-  it('should render without crashing', () => {
-    const wrapper = shallow(<NotificationItem />);
-    expect(wrapper.exists()).toBe(true);
-  });
+describe('NotificationsItem test cases', () => {
+  it('renders the component without crashing', () => {
+    shallow(<NotificationItem />);
+  })
 
-  it('should render correct type and value props', () => {
-    const wrapper = shallow(<NotificationItem type="default" value="test" />);
-    expect(wrapper.prop('data-notification-type')).toEqual('default');
-    expect(wrapper.text()).toEqual('test');
-  });
+  it('renders correctly using type and value props',() => {
+    const wrapper = shallow(<NotificationItem type="default" value="test"/>);
+    expect(wrapper.find('li[data-notification-type="default"]').text()).toBe('test');
+  })
 
-  it('should render correct html prop', () => {
-    const wrapper = shallow(<NotificationItem html={{ __html: '<u>test</u>' }} />);
-    expect(wrapper.html()).toContain('<u>test</u>');
-  });
-});
+  it('renders correctly using html prop',() => {
+    const html = { __html: '<u>testing</u>' };
+    const wrapper = shallow(<NotificationItem html={html}/>);
+    expect(wrapper.find('li').html()).toContain('<u>testing</u>');
+  })
+})
