@@ -22,51 +22,51 @@ class App extends React.Component {
         { id: 2, type: 'urgent', value: 'New resume available' },
         { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
       ],
-      displayDrawer: false, // Default state for displayDrawer
-    };
+    }
+  };
+
+  handleKeyDown = (event) => {
+    if (event.ctrlKey && event.key === "h") {
+      alert("Logging you out");
+      this.props.logOut();
+    }
   }
 
-  // Function to set displayDrawer to true
-  handleDisplayDrawer = () => {
-    this.setState({ displayDrawer: true });
-  };
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
 
-  // Function to set displayDrawer to false
-  handleHideDrawer = () => {
-    this.setState({ displayDrawer: false });
-  };
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  }
 
   render() {
     const { isLoggedIn } = this.props;
     return (
       <>
-        {/* Pass displayDrawer state and functions to Notifications */}
-        <Notifications
-          listNotifications={this.state.listNotifications}
-          displayDrawer={this.state.displayDrawer}
-          handleDisplayDrawer={this.handleDisplayDrawer}
-          handleHideDrawer={this.handleHideDrawer}
-        />
-        <div className="App">
-          <Header />
-          <div className="App-body">
-            {isLoggedIn ? <CourseList listCourses={this.state.listCourses} /> : <Login />}
-          </div>
-          <div className="App-footer">
-            <Footer />
-          </div>
+      <Notifications listNotifications={this.state.listNotifications} />
+      <div className="App">
+        <Header />
+        <div className="App-body">
+          {isLoggedIn ? <CourseList listCourses={this.state.listCourses} /> : <Login />}
         </div>
-      </>
-    );
+        <div className="App-footer">
+          <Footer />
+        </div>
+      </div>
+    </>
+    )
   }
 }
 
-App.propTypes = {
+Notifications.propTypes = {
   isLoggedIn: PropTypes.bool,
+  logOut: PropTypes.func,
 };
 
-App.defaultProps = {
+Notifications.defaultProps = {
   isLoggedIn: false,
+  logOut: () => {},
 };
 
 export default App;

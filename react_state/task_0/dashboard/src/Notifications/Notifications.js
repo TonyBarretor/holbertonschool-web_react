@@ -14,12 +14,12 @@ const NotificationItemShape = PropTypes.shape({
 });
 
 const Notifications = ({ displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer }) => {
-  const handleButtonClick = () => {
-    handleHideDrawer();
+  const handleNotificationsClick = () => {
+    handleDisplayDrawer(); // Call handleDisplayDrawer when clicking on Your notifications
   };
 
-  const handleNotificationsClick = () => {
-    handleDisplayDrawer();
+  const handleButtonClick = () => {
+    handleHideDrawer(); // Call handleHideDrawer when clicking on the close button
   };
 
   const buttonStyle = {
@@ -44,15 +44,14 @@ const Notifications = ({ displayDrawer, listNotifications, handleDisplayDrawer, 
           </button>
           <p>Here is the list of notifications</p>
           <ul>
-            {listNotifications.length === 0 ? (
+            {listNotifications.length === 0 && (
               <tr>
                 <td colSpan={2}>No new notification for now</td>
               </tr>
-            ) : (
-              listNotifications.map((notification) => (
-                <NotificationItem key={notification.id} {...notification} />
-              ))
             )}
+            {listNotifications.map((notification) => (
+              <NotificationItem key={notification.id} {...notification} />
+            ))}
           </ul>
         </div>
       )}

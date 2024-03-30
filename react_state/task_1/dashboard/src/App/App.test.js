@@ -38,21 +38,20 @@ describe('App component', () => {
     expect(wrapper.find('CourseList').exists()).toBe(true);
   })
 
-  it('has default state displayDrawer set to false', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.state('displayDrawer')).toBe(false);
-  });
+  it('calls logOut prop and displays alert when Ctrl+h is pressed', () => {
+    const logOutMock = jest.fn();
+    const windowAlerMock = jest.fn();
+    window.alert = windowAlerMock;
+    
+    const wrapper = shallow(<App isLoggedIn={true} logOut={logOutMock} />);
 
-  it('updates state to true after calling handleDisplayDrawer', () => {
-    const wrapper = shallow(<App />);
-    wrapper.instance().handleDisplayDrawer();
-    expect(wrapper.state('displayDrawer')).toBe(true);
-  });
+    // Simulate keydown event with Ctrl+h
+    wrapper.instance().handleKeyDown({ ctrlKey: true, key: 'h' });
 
-  it('updates state to false after calling handleHideDrawer', () => {
-    const wrapper = shallow(<App />);
-    wrapper.instance().handleDisplayDrawer(); // Set to true first
-    wrapper.instance().handleHideDrawer();
-    expect(wrapper.state('displayDrawer')).toBe(false);
+    expect(logOutMock).toHaveBeenCalledTimes(1);
+    expect(windowAlerMock).toHaveBeenCalledWith('Logging you out');
+
+    // Restore the original alert function after the test
+    jest.spyOn(window, 'alert').mockRestore(); // Restore original alert behavior
   });
 });

@@ -1,27 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ROW_COLORS = {
-  HEADER: '#deb5b545',
-  DEFAULT: '#f5f5f5ab',
-};
-
-const CourseListRow = ({
-  isHeader = false,
-  textFirstCell,
-  textSecondCell = null,
-}) => {
-  const backgroundColor = isHeader ? ROW_COLORS.HEADER : ROW_COLORS.DEFAULT;
+const CourseListRow = ({ isHeader=false, textFirstCell, textSecondCell=null }) => {
   if (isHeader) {
     if (textSecondCell === null) {
       return (
-        <tr style={{ backgroundColor }}>
+        <tr>
           <th colSpan="2">{textFirstCell}</th>
         </tr>
       );
     } else {
       return (
-        <tr style={{ backgroundColor }}>
+        <tr>
           <th>{textFirstCell}</th>
           <th>{textSecondCell}</th>
         </tr>
@@ -29,7 +19,7 @@ const CourseListRow = ({
     }
   } else {
     return (
-      <tr style={{ backgroundColor }}>
+      <tr>
         <td>{textFirstCell}</td>
         <td>{textSecondCell}</td>
       </tr>
@@ -46,6 +36,6 @@ CourseListRow.propTypes = {
 CourseListRow.defaultProps = {
   isHeader: false,
   textSecondCell: null,
-};
+}
 
-export default CourseListRow;
+export default CourseListRow

@@ -3,11 +3,11 @@ import Notifications from "./Notifications";
 import { shallow } from "enzyme";
 
 describe('Notifications component test cases', () => {
-  it('renders Notifications without crashing', () => {
+  it('Notifications renders without crashing', () => {
     shallow(<Notifications />);
   });
 
-  it('renders three NotificationItem components', () => {
+  it('Notifications renders three NotificationItem components', () => {
     const notifications = [
       { id: 1, type: 'default', value: 'Test notification 1' },
       { id: 2, type: 'urgent', value: 'Test notification 2' },
@@ -20,6 +20,18 @@ describe('Notifications component test cases', () => {
     const wrapper = shallow(<Notifications displayDrawer={true}/>);
     const notificationText = 'Here is the list of notifications';
     expect(wrapper.find('p').text()).toEqual(notificationText);
+  });
+
+  it('NotificationItem renders the right html', () => {
+    const notifications = [
+      { id: 1, type: 'default', value: 'Test notification 1'},
+      { id: 2, type: 'urgent', value: 'Test notification 2' },
+    ];
+    const html = undefined; // The first NotificationItem doesn't have the html prop
+    const notificationProps = [{type: 'default', value: 'test'}]; 
+    const wrapper = shallow(<Notifications displayDrawer={true} notifications={notificationProps} listNotifications={notifications} />);
+    const firstItem = wrapper.find('NotificationItem').first();
+    expect(firstItem.props().html).toEqual(html);
   });
 
   it('renders div.menuItem when displayDrawer is false', () => {
@@ -64,14 +76,14 @@ describe('Notifications component test cases', () => {
     expect(wrapper.text()).not.toContain('Here is the list of notifications'); // Empty message displayed
   });
 
-  it('calls handleDisplayDrawer when clicking on menu item', () => {
+  it('calls handleDisplayDrawer when clicking on the menu item', () => {
     const handleDisplayDrawer = jest.fn();
     const wrapper = shallow(<Notifications displayDrawer={false} handleDisplayDrawer={handleDisplayDrawer} />);
     wrapper.find('.menuItem').simulate('click');
     expect(handleDisplayDrawer).toHaveBeenCalled();
   });
 
-  it('calls handleHideDrawer when clicking on close button', () => {
+  it('calls handleHideDrawer when clicking on the close button', () => {
     const handleHideDrawer = jest.fn();
     const wrapper = shallow(<Notifications displayDrawer={true} handleHideDrawer={handleHideDrawer} />);
     wrapper.find('button').simulate('click');
