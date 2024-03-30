@@ -67,4 +67,11 @@ Notifications.propTypes = {
   handleHideDrawer: PropTypes.func.isRequired,
 };
 
+Notifications.defaultProps = {
+  displayDrawer: false,
+  listNotifications: [],
+  handleDisplayDrawer: () => {},
+  handleHideDrawer: () => {},
+};
+
 export default Notifications;
