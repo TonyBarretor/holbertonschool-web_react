@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from '../Header/Header';
-import Notifications from '../Notifications/Notifications'; // Modified import
+import Notifications from '../Notifications/Notifications'; 
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
@@ -38,10 +38,8 @@ class App extends React.Component {
     const { isLoggedIn } = this.props;
     return (
       <>
-        {/* Modified Notifications import */}
         <Notifications 
           listNotifications={this.state.listNotifications} 
-          displayDrawer={this.state.displayDrawer} 
           handleDisplayDrawer={this.handleDisplayDrawer} 
           handleHideDrawer={this.handleHideDrawer} 
         />
@@ -59,11 +57,11 @@ class App extends React.Component {
   }
 }
 
-Notifications.propTypes = {
+App.propTypes = {
   isLoggedIn: PropTypes.bool,
 };
 
-Notifications.defaultProps = {
+App.defaultProps = {
   isLoggedIn: false,
 };
 
