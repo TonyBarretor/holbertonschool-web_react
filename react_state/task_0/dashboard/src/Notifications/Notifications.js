@@ -13,7 +13,7 @@ const NotificationItemShape = PropTypes.shape({
   value: PropTypes.string,
 });
 
-const Notifications = ({ displayDrawer = false, listNotifications=[], handleDisplayDrawer, handleHideDrawer }) => {
+const Notifications = ({ displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer }) => {
   const handleButtonClick = () => {
     handleHideDrawer();
   };
@@ -44,14 +44,15 @@ const Notifications = ({ displayDrawer = false, listNotifications=[], handleDisp
           </button>
           <p>Here is the list of notifications</p>
           <ul>
-            {listNotifications.length === 0 && (
+            {listNotifications.length === 0 ? (
               <tr>
                 <td colSpan={2}>No new notification for now</td>
               </tr>
+            ) : (
+              listNotifications.map((notification) => (
+                <NotificationItem key={notification.id} {...notification} />
+              ))
             )}
-            {listNotifications.map((notification) => (
-              <NotificationItem key={notification.id} {...notification} />
-            ))}
           </ul>
         </div>
       )}
@@ -60,14 +61,10 @@ const Notifications = ({ displayDrawer = false, listNotifications=[], handleDisp
 };
 
 Notifications.propTypes = {
-  displayDrawer: PropTypes.bool,
-  listNotifications: PropTypes.arrayOf(NotificationItemShape),
+  displayDrawer: PropTypes.bool.isRequired,
+  listNotifications: PropTypes.arrayOf(NotificationItemShape).isRequired,
   handleDisplayDrawer: PropTypes.func.isRequired,
   handleHideDrawer: PropTypes.func.isRequired,
-};
-
-Notifications.defaultProps = {
-  displayDrawer: false,
 };
 
 export default Notifications;
