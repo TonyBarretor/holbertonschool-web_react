@@ -20,11 +20,11 @@ class Notifications extends React.Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  handleNotificationsClick() {
+  handleNotificationsClick = () => {
     this.props.handleDisplayDrawer(); // Call handleDisplayDrawer when clicking on Your notifications
   }
 
-  handleButtonClick() {
+  handleButtonClick = () => {
     this.props.handleHideDrawer(); // Call handleHideDrawer when clicking on the close button
   }
 
