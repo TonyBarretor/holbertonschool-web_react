@@ -13,57 +13,64 @@ const NotificationItemShape = PropTypes.shape({
   value: PropTypes.string,
 });
 
-const Notifications = ({ displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer }) => {
-  const handleNotificationsClick = () => {
-    handleDisplayDrawer(); // Call handleDisplayDrawer when clicking on Your notifications
+class Notifications extends React.PureComponent {
+  handleButtonClick = () => {
+    console.log('Close button has been clicked');
   };
 
-  const handleButtonClick = () => {
-    handleHideDrawer(); // Call handleHideDrawer when clicking on the close button
-  };
+  render() {
+    const { displayDrawer, listNotifications, markNotificationAsRead } = this.props;
 
-  const buttonStyle = {
-    padding: '0',
-    float: 'right',
-    backgroundColor: 'white',
-    border: 'none',
-    cursor: 'pointer',
-  };
+    const buttonStyle = {
+      padding: '0',
+      float: 'right',
+      backgroundColor: 'white',
+      border: 'none',
+      cursor: 'pointer',
+    };
 
-  return (
-    <div className="NotificationsContainer">
-      <div className="menuItem" onClick={handleNotificationsClick}>Your notifications</div>
-      {displayDrawer && (
-        <div className="Notifications">
-          <button
-            aria-label="Close"
-            style={buttonStyle}
-            onClick={handleButtonClick}
-          >
-            <img src={closeIcon} alt="Close icon" width="16px" />
-          </button>
-          <p>Here is the list of notifications</p>
-          <ul>
-            {listNotifications.length === 0 && (
-              <tr>
-                <td colSpan={2}>No new notification for now</td>
-              </tr>
-            )}
-            {listNotifications.map((notification) => (
-              <NotificationItem key={notification.id} {...notification} />
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
+    return (
+      <div className="NotificationsContainer">
+        <div className="menuItem">Your notifications</div>
+        {displayDrawer && (
+          <div className="Notifications">
+            <button
+              aria-label="Close"
+              style={buttonStyle}
+              onClick={this.handleButtonClick}
+            >
+              <img src={closeIcon} alt="Close icon" width="16px" />
+            </button>
+            <p>Here is the list of notifications</p>
+            <ul>
+              {listNotifications.length === 0 && (
+                <tr>
+                  <td colSpan={2}>No new notification for now</td>
+                </tr>
+              )}
+              {listNotifications.map((notification) => (
+                <NotificationItem
+                  key={notification.id}
+                  markAsRead={markNotificationAsRead}
+                  {...notification}
+                />
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
 Notifications.propTypes = {
-  displayDrawer: PropTypes.bool.isRequired,
-  listNotifications: PropTypes.arrayOf(NotificationItemShape).isRequired,
-  handleDisplayDrawer: PropTypes.func.isRequired,
-  handleHideDrawer: PropTypes.func.isRequired,
+  displayDrawer: PropTypes.bool,
+  listNotifications: PropTypes.arrayOf(NotificationItemShape),
+  markNotificationAsRead: PropTypes.func.isRequired,
+};
+
+Notifications.defaultProps = {
+  displayDrawer: false,
 };
 
 export default Notifications;
