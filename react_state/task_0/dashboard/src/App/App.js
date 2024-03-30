@@ -38,6 +38,7 @@ class App extends React.Component {
 
   render() {
     const { isLoggedIn } = this.props;
+    const { displayDrawer} = this.state; //Retrieve displayDrawer from state
     return (
       <>
         {/* Pass displayDrawer state and functions to Notifications */}
