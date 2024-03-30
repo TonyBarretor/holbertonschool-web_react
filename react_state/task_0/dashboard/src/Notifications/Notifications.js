@@ -13,51 +13,60 @@ const NotificationItemShape = PropTypes.shape({
   value: PropTypes.string,
 });
 
-const Notifications = ({ displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer }) => {
-  const handleNotificationsClick = () => {
-    handleDisplayDrawer(); // Call handleDisplayDrawer when clicking on Your notifications
-  };
+class Notifications extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleNotificationsClick = this.handleNotificationsClick.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+  }
 
-  const handleButtonClick = () => {
-    handleHideDrawer(); // Call handleHideDrawer when clicking on the close button
-  };
+  handleNotificationsClick() {
+    this.props.handleDisplayDrawer(); // Call handleDisplayDrawer when clicking on Your notifications
+  }
 
-  const buttonStyle = {
-    padding: '0',
-    float: 'right',
-    backgroundColor: 'white',
-    border: 'none',
-    cursor: 'pointer',
-  };
+  handleButtonClick() {
+    this.props.handleHideDrawer(); // Call handleHideDrawer when clicking on the close button
+  }
 
-  return (
-    <div className="NotificationsContainer">
-      <div className="menuItem" onClick={handleNotificationsClick}>Your notifications</div>
-      {displayDrawer && (
-        <div className="Notifications">
-          <button
-            aria-label="Close"
-            style={buttonStyle}
-            onClick={handleButtonClick}
-          >
-            <img src={closeIcon} alt="Close icon" width="16px" />
-          </button>
-          <p>Here is the list of notifications</p>
-          <ul>
-            {listNotifications.length === 0 && (
-              <tr>
-                <td colSpan={2}>No new notification for now</td>
-              </tr>
-            )}
-            {listNotifications.map((notification) => (
-              <NotificationItem key={notification.id} {...notification} />
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
+  render() {
+    const { displayDrawer, listNotifications } = this.props;
+    const buttonStyle = {
+      padding: '0',
+      float: 'right',
+      backgroundColor: 'white',
+      border: 'none',
+      cursor: 'pointer',
+    };
+
+    return (
+      <div className="NotificationsContainer">
+        <div className="menuItem" onClick={this.handleNotificationsClick}>Your notifications</div>
+        {displayDrawer && (
+          <div className="Notifications">
+            <button
+              aria-label="Close"
+              style={buttonStyle}
+              onClick={this.handleButtonClick}
+            >
+              <img src={closeIcon} alt="Close icon" width="16px" />
+            </button>
+            <p>Here is the list of notifications</p>
+            <ul>
+              {listNotifications.length === 0 && (
+                <tr>
+                  <td colSpan={2}>No new notification for now</td>
+                </tr>
+              )}
+              {listNotifications.map((notification) => (
+                <NotificationItem key={notification.id} {...notification} />
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool.isRequired,
