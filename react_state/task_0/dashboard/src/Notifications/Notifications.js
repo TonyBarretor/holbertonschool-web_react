@@ -13,29 +13,32 @@ const NotificationItemShape = PropTypes.shape({
   value: PropTypes.string,
 });
 
-const Notifications = ({
-  displayDrawer,
-  listNotifications,
-  handleDisplayDrawer,
-  handleHideDrawer
-}) => {
+const Notifications = ({ displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer }) => {
+  const handleNotificationsClick = () => {
+    handleDisplayDrawer(); // Call handleDisplayDrawer when clicking on Your notifications
+  };
+
+  const handleButtonClick = () => {
+    handleHideDrawer(); // Call handleHideDrawer when clicking on the close button
+  };
+
+  const buttonStyle = {
+    padding: '0',
+    float: 'right',
+    backgroundColor: 'white',
+    border: 'none',
+    cursor: 'pointer',
+  };
+
   return (
     <div className="NotificationsContainer">
-      <div className="menuItem" onClick={handleDisplayDrawer}>
-        Your notifications
-      </div>
+      <div className="menuItem" onClick={handleNotificationsClick}>Your notifications</div>
       {displayDrawer && (
         <div className="Notifications">
           <button
             aria-label="Close"
-            style={{
-              padding: '0',
-              float: 'right',
-              backgroundColor: 'white',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-            onClick={handleHideDrawer}
+            style={buttonStyle}
+            onClick={handleButtonClick}
           >
             <img src={closeIcon} alt="Close icon" width="16px" />
           </button>
@@ -46,7 +49,7 @@ const Notifications = ({
                 <td colSpan={2}>No new notification for now</td>
               </tr>
             )}
-            {listNotifications.map(notification => (
+            {listNotifications.map((notification) => (
               <NotificationItem key={notification.id} {...notification} />
             ))}
           </ul>
