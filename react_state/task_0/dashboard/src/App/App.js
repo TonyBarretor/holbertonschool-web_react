@@ -1,3 +1,4 @@
+// App.js
 import React from 'react';
 import './App.css';
 import Header from '../Header/Header';
@@ -22,7 +23,7 @@ class App extends React.Component {
         { id: 2, type: 'urgent', value: 'New resume available' },
         { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
       ],
-      displayDrawer: false,
+      displayDrawer: false, // State to handle display of notifications
     };
   }
 
@@ -36,10 +37,12 @@ class App extends React.Component {
 
   render() {
     const { isLoggedIn } = this.props;
+    const { displayDrawer } = this.state; // Retrieve displayDrawer from state
     return (
       <>
         <Notifications 
           listNotifications={this.state.listNotifications} 
+          displayDrawer={displayDrawer} // Pass displayDrawer to Notifications
           handleDisplayDrawer={this.handleDisplayDrawer} 
           handleHideDrawer={this.handleHideDrawer} 
         />
@@ -66,4 +69,5 @@ App.defaultProps = {
 };
 
 export default App;
+
 
