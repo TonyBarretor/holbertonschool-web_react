@@ -5,8 +5,6 @@ import Notifications from '../Notifications/Notifications';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
-import BodySection from '../BodySection/BodySection';
-import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import PropTypes from 'prop-types';
 import { getLatestNotification } from '../utils/utils';
 
@@ -24,44 +22,45 @@ class App extends React.Component {
         { id: 2, type: 'urgent', value: 'New resume available' },
         { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
       ],
+      displayDrawer: false, // Default state for displayDrawer
     };
   }
 
-  handleKeyDown = (event) => {
-    if (event.ctrlKey && event.key === 'h') {
-      alert('Logging you out');
-      this.props.logOut();
-    }
+  // Function to set displayDrawer to true
+  handleDisplayDrawer = () => {
+    this.setState({ displayDrawer: true });
   };
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
+  // Function to set displayDrawer to false
+  handleHideDrawer = () => {
+    this.setState({ displayDrawer: false });
+  };
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
+  // Function to mark notification as read
+  markNotificationAsRead = (id) => {
+    this.setState((prevState) => ({
+      listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
+    }));
+  };
 
   render() {
     const { isLoggedIn } = this.props;
+    const { displayDrawer, listNotifications } = this.state; // Retrieve displayDrawer and listNotifications from state
+
     return (
       <>
-        <Notifications listNotifications={this.state.listNotifications} />
+        {/* Pass displayDrawer state, listNotifications, and functions to Notifications */}
+        <Notifications
+          listNotifications={listNotifications}
+          displayDrawer={displayDrawer}
+          handleDisplayDrawer={this.handleDisplayDrawer}
+          handleHideDrawer={this.handleHideDrawer}
+          markNotificationAsRead={this.markNotificationAsRead}
+        />
         <div className="App">
           <Header />
           <div className="App-body">
-            {isLoggedIn ? (
-              <BodySectionWithMarginBottom title="Course list">
-                <CourseList listCourses={this.state.listCourses} />
-              </BodySectionWithMarginBottom>
-            ) : (
-              <BodySectionWithMarginBottom title="Log in to continue">
-                <Login />
-              </BodySectionWithMarginBottom>
-            )}
-            <BodySection title="News from the School">
-              <p>More news soon... </p>
-            </BodySection>
+            {isLoggedIn ? <CourseList listCourses={this.state.listCourses} /> : <Login />}
           </div>
           <div className="App-footer">
             <Footer />
@@ -72,14 +71,12 @@ class App extends React.Component {
   }
 }
 
-Notifications.propTypes = {
+App.propTypes = {
   isLoggedIn: PropTypes.bool,
-  logOut: PropTypes.func,
 };
 
-Notifications.defaultProps = {
+App.defaultProps = {
   isLoggedIn: false,
-  logOut: () => {},
 };
 
 export default App;
